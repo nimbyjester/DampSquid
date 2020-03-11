@@ -54,8 +54,6 @@ namespace DampNet.Test
             Assert.Equal(t.Hi, b.Hi);
         }
 
-
-
         [Fact]
         public void CombinedFlagPropertiesShouldSerialize()
         {

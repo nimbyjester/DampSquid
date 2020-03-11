@@ -14,12 +14,11 @@ namespace RenderTest
         {
             //TestQuad item = new TestQuad();
             item.transform.Position += new Vector3(5, 0, 0);
-            item.speed = 0f;
             renderables.Add(item);
 
-            //TestQuad item1 = new TestQuad();
-            //item1.speed = -0.015f;
-            //renderables.Add(item1);
+            TestQuad item1 = new TestQuad();
+            item1.transform.RotationVelocity += new Vector3(0, 1f, 0.0f);
+            renderables.Add(item1);
 
             //TestQuad item2 = new TestQuad();
             //item2.transform.Position += new Vector3(-5, 0, 0);

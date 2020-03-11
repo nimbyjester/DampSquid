@@ -15,7 +15,6 @@ namespace DampEngine.Drawing.Visual
     {
         private ResourceSet _mainPerObjectRS;
         public Transform transform = new Transform();
-        public Single speed = 0.001f;
         private const string VertexCode = @"
 #version 450
 
