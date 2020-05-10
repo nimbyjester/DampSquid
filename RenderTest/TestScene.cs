@@ -17,7 +17,7 @@ namespace RenderTest
             renderables.Add(item);
 
             TestQuad item1 = new TestQuad();
-            item1.transform.RotationVelocity += new Vector3(0, 1f, 0.0f);
+            item1.transform.RotationVelocity += new Vector3(0, 1f, 1.01f);
             renderables.Add(item1);
 
             //TestQuad item2 = new TestQuad();

@@ -217,7 +217,7 @@ namespace DampNet.Test
         }
 
         [Fact]
-        public void asdadsad()
+        public void SubObjectsCanBeSerialized()
         {
             var t = new Test();
             t.num16 = 1;
@@ -231,7 +231,12 @@ namespace DampNet.Test
             var bytes = DampConverter.Serialize(a, SerializerMode.ALL);
             
             var b = DampConverter.DeSerialize<ObjectTest>(bytes, SerializerMode.ALL);
-
+            Assert.Equal(t.num16, b.test.num16);
+            Assert.Equal(t.num32, b.test.num32);
+            Assert.Equal(t.single, b.test.single);
+            Assert.Equal(t.vec, b.test.vec);
+            Assert.Equal(t.vec2, b.test.vec2);
+            Assert.Equal(t.uNum16, b.test.uNum16);
         }
 
     }

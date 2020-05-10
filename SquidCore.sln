@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderTest", "RenderTest\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DampEngine", "DampEngine\DampEngine.csproj", "{A200B6FD-7891-4FEB-AF2D-4DEB7A4981F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DampNet", "DampNet\DampNet.csproj", "{2FD0065B-E146-443C-8DBF-4BD42C0B824D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DampNet", "DampNet\DampNet.csproj", "{2FD0065B-E146-443C-8DBF-4BD42C0B824D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DampNet.Test", "DampNet.Test\DampNet.Test.csproj", "{E596ABAD-069A-40D4-9160-D11C7246A9D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DampNet.Test", "DampNet.Test\DampNet.Test.csproj", "{E596ABAD-069A-40D4-9160-D11C7246A9D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

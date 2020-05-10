@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Reflection;
 
 namespace DampNet
 {
@@ -21,9 +23,9 @@ namespace DampNet
             converters.Add(typeof(Single), (SingleConverter, SingleConverter));
             converters.Add(typeof(Double), (DoubleConverter, DoubleConverter));
             converters.Add(typeof(Char), (CharConverter, CharConverter));
-            converters.Add(typeof(Vector3), (Vector3Converter, Vector3Converter));
             converters.Add(typeof(String), (StringConverter, StringConverter));
             converters.Add(typeof(Object), (StringConverter, StringConverter));
+            converters.Add(typeof(Vector3), (Vector3Converter, Vector3Converter));
         }
         public static (Func<Func<object, object>, Func<object, Byte[]>> getter, Func<Action<object, object>, Func<object, Byte[], Int32, Int32>> setter) GetConvertersFor(Type type)
         {
@@ -46,7 +48,56 @@ namespace DampNet
             Func<Action<object, object>, Func<object, Byte[], Int32, Int32>>
             )  output)) return output;
 
-            throw new InvalidCastException();
+
+            var list = DampConverter.CreateConverterList(type);
+
+            Func<object, Byte[]> GetFrom(Func<object, object> getter)
+            {
+                Byte[] getBytes(Object parent)
+                {
+                    var obj = getter(parent);
+                    if (obj == null) return Array.Empty<Byte>();
+                    var bytes = list.SelectMany(v => v.getter(obj));
+                    return bytes.ToArray();
+                }
+                return getBytes;
+            }
+            Func<object, Byte[], Int32, Int32> SetFrom(Action<object, object> setter)
+            {
+                Int32 setBytes(Object parent, Byte[] data, Int32 index)
+                {
+                    if (data.Length == 0) return index;
+                    var cons = type.GetConstructors().First();
+                   
+                    var consturctedObj = cons.Invoke(cons.GetParameters().Select(s => GetDefault(s.ParameterType)).ToArray());
+
+
+                   // var consturctedObj = type.GetConstructor(Array.Empty<Type>()).Invoke(Array.Empty<Object>());
+                    var usedBytes = 0;
+                    foreach (var converter in list)
+                    {
+                        usedBytes++;
+                        index += converter.setter(consturctedObj, data, index);
+                    }
+                    setter(parent, consturctedObj);
+                    return usedBytes;
+                }
+
+                return setBytes;
+            }
+            converters.Add(type, (GetFrom, SetFrom));
+            return converters[type];
+
+
+           // throw new InvalidCastException();
+        }
+        private static object GetDefault(Type type)
+        {
+            if (type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            return null;
         }
     }
 }

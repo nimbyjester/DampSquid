@@ -23,7 +23,7 @@ namespace DampNet
             return CreateConverterList(type);
 
         }
-        private static List<(
+        internal static List<(
                             SerializerMode mode,
                             Func<object, Byte[]> getter,
                             Func<object, Byte[], Int32, Int32> setter)> CreateConverterList(Type type)
